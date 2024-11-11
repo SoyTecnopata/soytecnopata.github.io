@@ -1,0 +1,315 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>`Terraform 101`</title>
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+<link rel="stylesheet" href="dist/theme/white.css" id="theme">
+		<!-- Theme used for syntax highlighted code -->
+<link rel="stylesheet" href="plugin/highlight/zenburn.min.css" id="highlight-theme"></head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<section data-markdown  data-background-image="media/background/4.png" data-background-size="contain"><textarea data-template>
+[comment]: # (Pass optional settings to reveal.js:)
+[comment]: # (markdown: { smartypants: true })
+[comment]: # (Other settings are documented at https://revealjs.com/config/)
+
+Alma Gonzalez | Inno It | 19 Noviembre 2024
+
+# `Terraform 101`
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+## Infraestructura como Código (IaC)
+
+ > Se refiere a la gestión y aprovisionamiento de infraestructura a través de código en lugar de procesos manuales.
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+### Terraform para desarrolladoras: 
+
+- Permite definir la infraestructura de manera declarativa, lo que hace más fácil entender el estado deseado.
+- Antes de aplicar cambios, Terraform permite visualizar el impacto de los mismos con el comando `terraform plan`.
+- Lleva un seguimiento del estado de la infraestructura, lo que ayuda a gestionar cambios y dependencias.
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+### IaC fuera de terraform:
+ CloudFormation (AWS), Azure Resource Manager, Ansible, Pulumi.
+
+</textarea></section>
+<section>
+<section data-markdown  data-background-image="media/background/2.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+![Pulumi](media/iac/pulumi.png) <!-- .element: style="transform: scale(1.25);" -->
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/2.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+![Cloudformation](media/iac/cloudformation.png) <!-- .element: style="transform: scale(1.25);" -->
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/2.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+![Ansible](media/iac/ansible.png)<!-- .element: style="transform: scale(1.25);" -->
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/2.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+![Terraform](media/iac/terraform.png) <!-- .element: style="transform: scale(1.25);" -->
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/2.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+![Opertofu](media/iac/opertofu.png)<!-- .element: style="transform: scale(1.25);" -->
+
+</textarea></section>
+</section>
+<section data-markdown  data-background-image="media/background/titulo.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+## Instalar Terraform
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+- CLI de Terraform
+  - El cliente es un único binario ejecutable compilado desde Go. Solo se necesita descarguar el binario apropiado para
+  el sistema operativo y arquitectura desde el sitio web de Terraform.
+    - https://developer.hashicorp.com/terraform/install
+    
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+- TFenv
+  - Terraform version manager
+    - https://github.com/tfutils/tfenv?tab=readme-ov-file#installation
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/titulo_l.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+### Cómo funciona Terraform ?
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+Terraform crea y administra recursos en plataformas en la nube y otros servicios a través de sus interfaces de programación de aplicaciones (API).
+
+Los proveedores permiten que Terraform funcione con prácticamente cualquier plataforma o servicio con una API accesible.
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+HashiCorp y la comunidad Terraform ya han escrito miles de proveedores para administrar muchos tipos diferentes de recursos y servicios.
+
+Puede encontrar todos los proveedores disponibles públicamente en el Registro de Terraform:
+Amazon Web Services (AWS), Azure, Google Cloud Platform (GCP), Kubernetes, Helm, GitHub, Splunk, DataDog ...
+
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+### Terraform Providers
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+
+
+Un `Terraform provider plugin` es un binario ejecutable que implementa el marco de complementos de Terraform.
+Crea una capa de abstracción entre las API ascendentes del proveedor y las construcciones con las que Terraform espera trabajar.
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+```HCL [1-9|11-13]
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.16"
+    }
+  }
+
+  required_version = ">= 1.2.0"
+}
+
+provider "aws" {
+  region  = "us-west-2"
+}
+
+```
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+fin
+
+</textarea></section>
+<section data-markdown  data-background-color="aquamarine"><textarea data-template>
+
+Notice the background color change.
+
+[comment]: # (section attributes for the just-ending slide can be specified:)
+</textarea></section>
+<section data-markdown  data-background-video="media/video.mp4", data-background-video-loop data-background-video-muted data-background-opacity="0.2"><textarea data-template>
+
+Use background videos, background pictures and **text formatting**,
+everything *without breaking* your markdown files.
+
+[comment]: # (Other background options: https://revealjs.com/backgrounds/)
+</textarea></section>
+<section data-markdown  ><textarea data-template>
+
+Even speaker notes, accessed through the `S` key on your keyboard.
+
+(You may have to allow pop-up windows and try again.)
+
+Note:
+This will only appear in the speaker view! 🤯
+
+</textarea></section>
+<section data-markdown  ><textarea data-template>
+
+## Pictures
+
+![picture of spaghetti](media/image0.gif) <!-- .element: style="height:50vh; max-width:80vw; image-rendering: crisp-edges;" -->
+
+Showcase media including images, videos and animations.
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Animations
+
+- This is an example list
+- Just to showcase Reveal.js' animations
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Animations
+
+- This is an example list
+- Just to showcase Reveal.js' animations
+- This item will be automatically faded-in
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+```js [1-2|3|4]
+let a = 1;
+let b = 2;
+let c = x => 1 + 2 + x;
+c(3);
+```
+<!-- .element: data-id="code" -->
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+```js [5]
+let a = 1;
+let b = 2;
+let c = x => 1 + 2 + x;
+c(3);
+c(5);
+```
+<!-- .element: data-id="code" -->
+
+Animate code as well <!-- .element: class="fragment" data-fragment-index="1" -->
+
+</textarea></section>
+<section data-markdown  ><textarea data-template>
+
+Insert Youtube videos.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KPfzRSBzNX4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</textarea></section>
+<section data-markdown  ><textarea data-template>
+
+Insert local videos.
+
+<iframe width="560" height="315" src="media/video.mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</textarea></section>
+<section data-markdown  ><textarea data-template>
+
+Download [markdown-slides](https://gitlab.com/da_doomer/markdown-slides)!
+
+</textarea></section>
+<section data-markdown  ><textarea data-template>
+
+A couple more examples follow.
+
+</textarea></section>
+<section data-markdown  ><textarea data-template>
+
+![logo](media/wide.png)
+
+***use markdown to write slides***
+
+Author Name
+
+</textarea></section>
+<section data-markdown  ><textarea data-template>
+
+Add tables:
+
+| Insert | Tables |
+| ------ | ------ |
+| A row  | Another|
+| text   | more   |
+
+</textarea></section>
+<section data-markdown  ><textarea data-template>
+
+## Vertical separator
+
+----------
+
+Some other text.
+
+</textarea></section>
+<section data-markdown ><textarea data-template>
+
+You can also use in-line HTML.
+
+<div style="font-size: 1em;">
+small
+</div>
+
+<div style="font-size: 5em;">
+large
+</div>
+</textarea></section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+Reveal.initialize({
+controls : false,
+markdown : {smartypants: true},
+controls : true,
+keyboard : true,
+hash : false,
+respondToHashChanges : false,
+				hash: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>
