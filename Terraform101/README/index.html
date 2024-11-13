@@ -71,7 +71,7 @@ Alma Gonzalez | Inno It | 19 Noviembre 2024
 
 </textarea></section>
 </section>
-<section data-markdown  data-background-image="media/background/titulo.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<section data-markdown  data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate><textarea data-template>
 
 ## Instalar Terraform
 </textarea></section>
@@ -100,6 +100,13 @@ Terraform crea y administra recursos en plataformas en la nube y otros servicios
 
 Los proveedores permiten que Terraform funcione con prácticamente cualquier plataforma o servicio con una API accesible.
 
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+![Opertofu](media/iac/terraform-provider.png)<!-- .element: style="transform: scale(1.25);" -->
+
+
 </textarea></section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
 
@@ -117,10 +124,9 @@ Amazon Web Services (AWS), Azure, Google Cloud Platform (GCP), Kubernetes, Helm,
 </textarea></section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
 
-
-
 Un `Terraform provider plugin` es un binario ejecutable que implementa el marco de complementos de Terraform.
 Crea una capa de abstracción entre las API ascendentes del proveedor y las construcciones con las que Terraform espera trabajar.
+https://registry.terraform.io/browse/providers
 
 </textarea></section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
@@ -142,9 +148,64 @@ provider "aws" {
 }
 
 ```
+</textarea></section>
+<section data-markdown  data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+### Recursos
 
 </textarea></section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+
+Los "recursos" se usan para definir los componentes la infraestructura.
+
+Un recurso puede ser un componente físico o virtual, como una instancia EC2, o puede ser un recurso lógico, como una aplicación Heroku.
+
+https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+Los bloques de recursos se componen de:
+
+- el tipo de recurso
+- el nombre del recurso.
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+
+Resource block
+
+```HCL[1|2-7|8-9]
+resource "aws_s3_bucket" "example" {
+  bucket = "my-tf-test-bucket"
+
+  tags = {
+    Name        = "My bucket"
+    Environment = "Dev"
+  }
+}
+
+```
+
+
+El prefijo del tipo se asigna al nombre del proveedor.
+En la configuración de ejemplo, Terraform administra el recurso aws_s3_bucket con el proveedor aws.
+Juntos, el tipo de recurso y el nombre del recurso forman un ID único para el recurso.
+Por ejemplo, el ID para su este recurso es es aws_s3_bucket.example.
+
+
+El bloque de recursos contiene argumentos que se utilizan para configurar el recurso.
+
+Los argumentos pueden incluir cosas como tamaños de instancias, nombre del bucket.
+En la documentación del  provider se enumeran los argumentos obligatorios y opcionales para cada recurso.
+
+
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
 
 fin
 
