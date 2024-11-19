@@ -32,8 +32,7 @@ Alma Gonzalez | Inno It | 19 Noviembre 2024
 </textarea></section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
 
-### Terraform para desarrolladoras: 
-
+### Terraform para desarrolladoras:
 - Permite definir la infraestructura de manera declarativa, lo que hace más fácil entender el estado deseado.
 - Antes de aplicar cambios, Terraform permite visualizar el impacto de los mismos con el comando `terraform plan`.
 - Lleva un seguimiento del estado de la infraestructura, lo que ayuda a gestionar cambios y dependencias.
@@ -71,62 +70,43 @@ Alma Gonzalez | Inno It | 19 Noviembre 2024
 
 </textarea></section>
 </section>
-<section data-markdown  data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate><textarea data-template>
-
-## Instalar Terraform
-</textarea></section>
-<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
-
-- CLI de Terraform
-  - El cliente es un único binario ejecutable compilado desde Go. Solo se necesita descarguar el binario apropiado para
-  el sistema operativo y arquitectura desde el sitio web de Terraform.
-    - https://developer.hashicorp.com/terraform/install
-    
-</textarea></section>
-<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
-- TFenv
-  - Terraform version manager
-    - https://github.com/tfutils/tfenv?tab=readme-ov-file#installation
-
-</textarea></section>
 <section data-markdown  data-background-image="media/background/titulo_l.png" data-background-size="contain" data-auto-animate><textarea data-template>
 
 ### Cómo funciona Terraform ?
 
 </textarea></section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
-
+<div style="text-align: justify">
 Terraform crea y administra recursos en plataformas en la nube y otros servicios a través de sus interfaces de programación de aplicaciones (API).
 
 Los proveedores permiten que Terraform funcione con prácticamente cualquier plataforma o servicio con una API accesible.
-
-
-</textarea></section>
-<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
-
-![Opertofu](media/iac/terraform-provider.png)<!-- .element: style="transform: scale(1.25);" -->
-
+</div>
 
 </textarea></section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
 
+![Terraform provider](media/iac/terraform-provider.png)<!-- .element: style="transform: scale(1.25);" -->
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="text-align: justify">
 HashiCorp y la comunidad Terraform ya han escrito miles de proveedores para administrar muchos tipos diferentes de recursos y servicios.
 
 Puede encontrar todos los proveedores disponibles públicamente en el Registro de Terraform:
 Amazon Web Services (AWS), Azure, Google Cloud Platform (GCP), Kubernetes, Helm, GitHub, Splunk, DataDog ...
-
+</div>
 
 </textarea></section>
 <section data-markdown  data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate><textarea data-template>
-
 ### Terraform Providers
 
 </textarea></section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
-
+<div style="text-align: justify">
 Un `Terraform provider plugin` es un binario ejecutable que implementa el marco de complementos de Terraform.
 Crea una capa de abstracción entre las API ascendentes del proveedor y las construcciones con las que Terraform espera trabajar.
 https://registry.terraform.io/browse/providers
+</div>
 
 </textarea></section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
@@ -156,25 +136,23 @@ provider "aws" {
 </textarea></section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
 
-
-Los "recursos" se usan para definir los componentes la infraestructura.
-
-Un recurso puede ser un componente físico o virtual, como una instancia EC2, o puede ser un recurso lógico, como una aplicación Heroku.
-
+<div style="text-align: justify">
+Un bloque de recursos declara que se desea que exista un objeto de infraestructura en particular con la configuración dada.
+Si está escribiendo una nueva configuración por primera vez, los recursos que define existirán solo en la configuración y aún no representarán objetos de infraestructura reales en la plataforma de destino.
 https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+</div>
 
 </textarea></section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
-
 Los bloques de recursos se componen de:
 
-- el tipo de recurso
-- el nombre del recurso.
+- Tipo de recurso.
+- Nombre del recurso.
+- Configuración del recurso.
 
 </textarea></section>
+<section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
-
-
 Resource block
 
 ```HCL[1|2-7|8-9]
@@ -189,164 +167,401 @@ resource "aws_s3_bucket" "example" {
 
 ```
 
-
-El prefijo del tipo se asigna al nombre del proveedor.
-En la configuración de ejemplo, Terraform administra el recurso aws_s3_bucket con el proveedor aws.
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="text-align: justify">
+El prefijo del tipo se asigna al nombre del proveedor. En la configuración de ejemplo, Terraform administra el recurso aws_s3_bucket con el proveedor aws.
 Juntos, el tipo de recurso y el nombre del recurso forman un ID único para el recurso.
-Por ejemplo, el ID para su este recurso es es aws_s3_bucket.example.
 
+Por ejemplo, el ID para su este recurso es `es aws_s3_bucket.example`
 
 El bloque de recursos contiene argumentos que se utilizan para configurar el recurso.
-
 Los argumentos pueden incluir cosas como tamaños de instancias, nombre del bucket.
 En la documentación del  provider se enumeran los argumentos obligatorios y opcionales para cada recurso.
+</div>
+
+</textarea></section>
+</section>
+<section data-markdown  data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+### Data Sources
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="text-align: justify">
+
+Las `Data Sources` permiten a Terraform utilizar información de recursos que existen fuera del codigo local de Terraform,
+esta puede estar definida por otra configuración independiente de Terraform o modificada por funciones.
+
+https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+</div>
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+Los bloques de datos se componen de:
+
+- Tipo de recurso.
+- Nombre del recurso.
+- Configuración del recurso.
+
+</textarea></section>
+<section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+Data block
+
+```HCL
+data "aws_iam_role" "example" {
+  name = "an_example_role_name"
+}
+```
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="text-align: justify">
+Un bloque de datos solicita que Terraform lea desde una fuente de datos determinada ("aws_ami") y exporte el resultado con el nombre local indicado ("ejemplo"). El nombre se utiliza para hacer referencia a este recurso desde otra parte del mismo módulo de Terraform, pero no tiene importancia fuera del alcance de un módulo.
+
+La fuente de datos y el nombre juntos sirven como identificador para un recurso determinado y, por lo tanto, deben ser únicos dentro de un módulo.
+</div>
+
+</textarea></section>
+</section>
+<section data-markdown  data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+### Variables
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="text-align: justify">
+las variables son una manera de hacer que las configuraciones sean más flexibles y reutilizables, permitiéndote parametrizar valores en lugar de hardcodearlos directamente en los archivos de configuración.
+Cada variable tiene un bloque variable que incluye su nombre y, opcionalmente, puede especificarse un valor predeterminado, una descripción y restricciones.
+</div>
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+Resource block
+
+```HCL
+variable "instance_type" {
+  description = "Tipo de instancia para el servidor"
+  type        = string
+  default     = "t2.micro"
+}
+
+```
+</textarea></section>
+<section data-markdown  data-background-image="media/background/titulo.png" data-background-size="contain" data-auto-animate><textarea data-template>
+### Estado
+
+</textarea></section>
+<section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="text-align: justify">
+
+Terraform guarda el estado en un archivo llamado terraform.tfstate.
+Este archivo contiene un mapeo de los recursos que Terraform ha creado y el estado de cada uno. Esto permite a Terraform comparar el estado "deseado" en tu código con el estado "real" de tus recursos en la infraestructura.
+</div>
+
+![Terraform provider](media/iac/terraform-state.png)<!-- .element: style="transform: scale(1.0);" -->
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+Por defecto, el archivo terraform.tfstate se guarda localmente en la carpeta de tu proyecto. Sin embargo, en equipos o proyectos grandes es preferible almacenar el estado de forma remota para que todos los integrantes trabajen con la misma referencia.
+
+Algunas opciones de almacenamiento remoto incluyen:
+
+- Terraform Cloud/Enterprise: Ofrece gestión de estado en la nube, bloqueo de estado y control de versiones.
+- Backends remotos: Puedes usar backends como AWS S3, Google Cloud Storage, o Azure Blob Storage junto con DynamoDB para bloquear el estado (en AWS).
+
+</textarea></section>
+</section>
+<section data-markdown  data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+## Instalar Terraform
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+- CLI de Terraform
+  - El cliente es un único binario ejecutable compilado desde Go. Solo se necesita descarguar el binario apropiado para
+  el sistema operativo y arquitectura desde el sitio web de Terraform.
+    - https://developer.hashicorp.com/terraform/install
+    
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+- TFenv
+  - Terraform version manager
+    - https://github.com/tfutils/tfenv?tab=readme-ov-file#installation
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate><textarea data-template>
+### Comandos principales
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="font-size: 2em;">
+
+```HCL
+terraform init
+```
+</div>
+<div style="text-align: justify">
 
 
+Este comando prepara el entorno de trabajo para un proyecto de Terraform. Es el primer paso que necesitas dar en cualquier proyecto nuevo.
+</div>
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="text-align: justify">
+
+- **Descarga de proveedores:** Terraform busca en el archivo de configuración (.tf) las dependencias de proveedores especificadas (como AWS, Google Cloud, Azure) y descarga los plugins correspondientes.
+
+- **Configuración del backend:** Si has definido un backend (como Amazon S3 para almacenar el estado de forma remota), terraform init lo configura.
+
+- **Reinicialización:** Si ya has ejecutado terraform init antes, puedes utilizar terraform init -upgrade para forzar una reinicialización del backend o del proveedor.
+</div>
 
 </textarea></section>
 <section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
 
+<div style="font-size: 2em;">
 
-fin
-
-</textarea></section>
-<section data-markdown  data-background-color="aquamarine"><textarea data-template>
-
-Notice the background color change.
-
-[comment]: # (section attributes for the just-ending slide can be specified:)
-</textarea></section>
-<section data-markdown  data-background-video="media/video.mp4", data-background-video-loop data-background-video-muted data-background-opacity="0.2"><textarea data-template>
-
-Use background videos, background pictures and **text formatting**,
-everything *without breaking* your markdown files.
-
-[comment]: # (Other background options: https://revealjs.com/backgrounds/)
-</textarea></section>
-<section data-markdown  ><textarea data-template>
-
-Even speaker notes, accessed through the `S` key on your keyboard.
-
-(You may have to allow pop-up windows and try again.)
-
-Note:
-This will only appear in the speaker view! 🤯
-
-</textarea></section>
-<section data-markdown  ><textarea data-template>
-
-## Pictures
-
-![picture of spaghetti](media/image0.gif) <!-- .element: style="height:50vh; max-width:80vw; image-rendering: crisp-edges;" -->
-
-Showcase media including images, videos and animations.
-
-</textarea></section>
-<section data-markdown  data-auto-animate><textarea data-template>
-
-## Animations
-
-- This is an example list
-- Just to showcase Reveal.js' animations
-
-</textarea></section>
-<section data-markdown  data-auto-animate><textarea data-template>
-
-## Animations
-
-- This is an example list
-- Just to showcase Reveal.js' animations
-- This item will be automatically faded-in
-
-</textarea></section>
-<section data-markdown  data-auto-animate><textarea data-template>
-
-```js [1-2|3|4]
-let a = 1;
-let b = 2;
-let c = x => 1 + 2 + x;
-c(3);
+```HCL
+terraform plan
 ```
-<!-- .element: data-id="code" -->
+</div>
+<div style="text-align: justify">
 
-</textarea></section>
-<section data-markdown  data-auto-animate><textarea data-template>
 
-```js [5]
-let a = 1;
-let b = 2;
-let c = x => 1 + 2 + x;
-c(3);
-c(5);
-```
-<!-- .element: data-id="code" -->
-
-Animate code as well <!-- .element: class="fragment" data-fragment-index="1" -->
-
-</textarea></section>
-<section data-markdown  ><textarea data-template>
-
-Insert Youtube videos.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/KPfzRSBzNX4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-</textarea></section>
-<section data-markdown  ><textarea data-template>
-
-Insert local videos.
-
-<iframe width="560" height="315" src="media/video.mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-</textarea></section>
-<section data-markdown  ><textarea data-template>
-
-Download [markdown-slides](https://gitlab.com/da_doomer/markdown-slides)!
-
-</textarea></section>
-<section data-markdown  ><textarea data-template>
-
-A couple more examples follow.
-
-</textarea></section>
-<section data-markdown  ><textarea data-template>
-
-![logo](media/wide.png)
-
-***use markdown to write slides***
-
-Author Name
-
-</textarea></section>
-<section data-markdown  ><textarea data-template>
-
-Add tables:
-
-| Insert | Tables |
-| ------ | ------ |
-| A row  | Another|
-| text   | more   |
-
-</textarea></section>
-<section data-markdown  ><textarea data-template>
-
-## Vertical separator
-
-----------
-
-Some other text.
-
-</textarea></section>
-<section data-markdown ><textarea data-template>
-
-You can also use in-line HTML.
-
-<div style="font-size: 1em;">
-small
+Este comando analiza tu configuración y genera un plan de ejecución que muestra las acciones que Terraform tomará en la infraestructura (creación, modificación o destrucción de recursos).
 </div>
 
-<div style="font-size: 5em;">
-large
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="text-align: justify">
+
+- **Visualización de cambios:** terraform plan muestra un desglose detallado de las modificaciones que planea hacer. Las adiciones de recursos aparecen como +, las eliminaciones como -, y las modificaciones con ~.
+
+- **Control de cambios:** Es una práctica común revisar el plan antes de aplicar cambios, ya que te da la oportunidad de evitar errores o ajustes no deseados.
+
+- **Salida en archivo:** Puedes guardar el plan en un archivo para revisarlo o aplicarlo más tarde con terraform apply, usando la opción -out.
 </div>
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+<div style="font-size: 2em;">
+
+```HCL
+terraform apply
+```
+</div>
+<div style="text-align: justify">
+
+
+Este comando realiza las modificaciones en la infraestructura en base a la configuración actual y al archivo de estado, siguiendo el plan que se generó.
+</div>
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="text-align: justify">
+
+- **Confirmación de cambios:** Si ejecutas terraform apply sin un archivo plan, Terraform te pedirá confirmar los cambios antes de aplicarlos.
+
+- **Aplicación de planes guardados:** Al usar terraform apply tfplan, Terraform utiliza el plan guardado y aplica los cambios sin requerir confirmación adicional, lo que puede ser útil en automatizaciones.
+</div>
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="text-align: justify">
+
+- **Ejecución en paralelo:** Terraform ejecuta tareas en paralelo cuando puede, lo que acelera el proceso de implementación en grandes despliegues.
+
+- **Errores y fallos:** Si algo falla durante el proceso, Terraform intenta revertir los cambios realizados en la medida de lo posible para mantener la infraestructura en un estado consistente.
+</div>
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+<div style="font-size: 2em;">
+
+```HCL
+terraform destroy
+```
+</div>
+
+<div style="text-align: justify">
+Este comando elimina todos los recursos creados y gestionados por Terraform en el entorno definido, llevándolos al estado de "sin recursos" o borrándolos.
+</div>
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="text-align: justify">
+
+- **Uso con precaución:** borra todos los recursos especificados en la configuración de Terraform, así que es importante usarlo cuidadosamente, especialmente en entornos productivos.
+
+- **Confirmación requerida:** Antes de iniciar el proceso de eliminación, Terraform pide confirmación para evitar borrar recursos por error.
+
+- **Filtrado de recursos:**  Aunque terraform destroy está pensado para destruir todos los recursos, se pueden especificar recursos individuales usando -target para eliminar solo un recurso o grupo específico.
+
+</div>
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/titulo_l.png" data-background-size="contain" data-auto-animate><textarea data-template>
+### Organización y Estructura del Código
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+<div style="text-align: justify">
+La organización del código en Terraform es crucial para facilitar el mantenimiento, colaboración y escalabilidad.
+</div>
+
+#### Archivos organizados por propósito:
+
+- `main.tf`: Configuración principal del recurso.
+- `variables.tf`: Declaración de variables.
+- `outputs.tf`: Declaración de valores de salida.
+- `providers.tf`: Configuración de proveedores.
+- `backend.tf`: Configuración del backend de estado.
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+#### Nombres claros y consistentes:
+Usa nombres descriptivos para los módulos y archivos.
+
+```css
+project/
+├── main.tf
+├── variables.tf
+├── outputs.tf
+├── modules/
+│   ├── networking/
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   └── outputs.tf
+│   ├── compute/
+│       ├── main.tf
+│       ├── variables.tf
+│       └── outputs.tf
+└── terraform.tfvars
+
+```
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+#### Separación por Entornos
+Evitar interferencias entre configuraciones de entornos (producción, desarrollo, pruebas) y facilitar la gestión de cada uno.
+
+- Estructura de carpetas por entorno:
+  Crea una carpeta para cada entorno y define configuraciones específicas.
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+```CSS
+envs/
+├── dev/
+│   ├── main.tf
+│   ├── variables.tf
+│   └── outputs.tf
+├── prod/
+│   ├── main.tf
+│   ├── variables.tf
+│   └── outputs.tf
+
+```
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+- Workspaces
+<div style="text-align: justify">
+Los workspaces permiten manejar múltiples entornos dentro de una misma configuración, manteniendo un estado separado para cada uno.
+Cuando trabajas con workspaces, cada uno tiene su propio archivo de estado, pero comparte las mismas configuraciones de Terraform (.tf files).
+
+Crear diferentes workspaces para dev, staging y prod.
+Cada workspace tiene su propio archivo de estado, aislando los recursos.
+</div>
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+Comandos para workspaces:
+
+```HCL [1|3|5|7|9]
+terraform workspace list
+
+terraform workspace new <nombre_del_workspace>
+
+terraform workspace select <nombre_del_workspace>
+
+terraform workspace delete <nombre_del_workspace>
+
+terraform workspace show
+
+```
+</textarea></section>
+<section data-markdown  data-background-image="media/background/titulo_l.png" data-background-size="contain" data-auto-animate><textarea data-template>
+### Uso de Variables Globales y Locales
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+Terraform permite usar variables para hacer el código dinámico y reutilizable
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+#### Variables globales:
+Se definen en un archivo como variables.tf y pueden ser sobrescritas usando terraform.tfvars o variables de entorno.
+
+```HCL
+variable "region" {
+  description = "Región de AWS"
+  default     = "us-west-1"
+}
+
+```
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+#### Variables locales:
+  Son específicas de un módulo o archivo y se definen con la sintaxis locals.
+
+```HCL
+
+locals {
+  environment = "dev"
+  instance_name = "${local.environment}-web-server"
+}
+
+```
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+
+#### Sobreescritura de variables:
+Usa archivos .tfvars o variables de entorno (TF_VAR_<variable>).
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/titulo_l.png" data-background-size="contain" data-auto-animate><textarea data-template>
+###  Estandarización de Nombres
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+Nombrar recursos de forma consistente mejora la claridad y el mantenimiento:
+
+Patrones comunes:
+```
+[entorno]-[nombre del recurso]-[número]
+```
+Ejemplo:
+```
+prod-web-server-01
+```
+
+</textarea></section>
+<section data-markdown  data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate><textarea data-template>
+Variables dinámicas:
+Usa interpolación para generar nombres automáticamente:
+
+```HCL
+
+resource "aws_instance" "example" {
+  name = "${var.environment}-${var.role}-server"
+}
+```
+
+Evita nombres genéricos o ambiguos: Usa nombres que reflejen el propósito y el entorno del recurso.
+
 </textarea></section>
 			</div>
 		</div>
