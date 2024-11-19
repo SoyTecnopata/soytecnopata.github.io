@@ -539,6 +539,8 @@ Integración: Se puede incluir en pipelines de CI/CD para garantizar que el cód
 Intalación: https://github.com/terraform-linters/tflint
 
 [comment]: # (!!! data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate)
+### Gracias
+[comment]: # (!!! data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate)
 
 Alma Gonzalez | Inno It | 26 Noviembre 2024
 
