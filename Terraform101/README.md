@@ -484,3 +484,64 @@ resource "aws_instance" "example" {
 Evita nombres genéricos o ambiguos: Usa nombres que reflejen el propósito y el entorno del recurso.
 
 [comment]: # (!!! data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate)
+### Prácticas de Seguridad
+[comment]: # (!!! data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate)
+
+Evitar Claves Secretas en el Código
+*Errores comunes:*
+
+- Incluir claves API, contraseñas o secretos en los archivos .tf.
+- Versionar estos archivos en sistemas como Git.
+
+[comment]: # (!!! data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate)
+
+- Soluciones:
+
+  - Usa servicios de gestión de secretos como AWS Secrets Manager, HashiCorp Vault o Azure Key Vault.
+Define claves como variables sensibles:
+```HCL
+  variable "db_password" {
+    type      = string
+    sensitive = true
+  }
+```
+
+Almacena valores sensibles en variables de entorno:
+```HCL
+  export TF_VAR_db_password="mi_clave_secreta"
+```  
+
+[comment]: # (!!! data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate)
+### Linters y herramientas de análisis de código
+[comment]: # (!!! data-background-image="media/background/titulo_l.png" data-background-size="contain" data-auto-animate)
+
+*Terraform fmt:*  Garantiza un formato estándar para los archivos .tf.
+
+Para verificar el formato sin modificar:
+```HCL
+terraform fmt -check
+```
+
+Para corregir automáticamente el formato:
+```HCL
+terraform fmt
+```
+Integración: Se puede incluir en pipelines de CI/CD para garantizar que el código siempre siga un estándar antes de ser revisado o aplicado.
+
+[comment]: # (!!! data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate)
+
+*TFLint:* Detecta errores comunes, configuraciones inválidas y recomienda mejores prácticas específicas del proveedor (como AWS o Azure).
+
+- Identifica errores antes de ejecutar terraform apply. 
+- Valida configuraciones del proveedor, como el tamaño de instancias, regiones soportadas, etc. 
+- Permite personalizar reglas específicas.
+
+Intalación: https://github.com/terraform-linters/tflint
+
+[comment]: # (!!! data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate)
+
+Alma Gonzalez | Inno It | 26 Noviembre 2024
+
+# `Terraform practical`
+
+[comment]: # (!!! data-background-image="media/background/4.png" data-background-size="contain")
