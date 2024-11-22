@@ -12,27 +12,60 @@ Alma Gonzalez | Inno It | 19 Noviembre 2024
 
 [comment]: # (!!! data-background-image="media/background/4.png" data-background-size="contain")
 
-### Configurar Terraform
+## Configurar AWS en Terraform
 
-[comment]: # (!!! data-background-image="media/background/titulo.png" data-background-size="contain" data-auto-animate)
-
-```
-my-module/
-├── main.tf
-├── variables.tf
-├── outputs.tf
-└── README.md
-```
-
-[comment]: # (!!! data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate)
+[comment]: # (!!! data-background-image="media/background/titulo_l.png" data-background-size="contain" data-auto-animate)
+### Provider Block
 <div style="text-align: justify">
-HashiCorp y la comunidad Terraform ya han escrito miles de proveedores para administrar muchos tipos diferentes de recursos y servicios.
-
-Puede encontrar todos los proveedores disponibles públicamente en el Registro de Terraform:
-Amazon Web Services (AWS), Azure, Google Cloud Platform (GCP), Kubernetes, Helm, GitHub, Splunk, DataDog ...
+Es la forma más directa de configurar AWS en Terraform. Aquí defines el provider y las credenciales necesarias.
 </div>
 
+```HCL
+provider "aws" {
+  region  = "eu-west-3"
+  access_key = "AKIA...YOURACCESSKEY"
+  secret_key = "SECRETKEY...YOURSECRETKEY"
+}
+
+```
 [comment]: # (!!! data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate)
+### Usando variables de entorno
+<div style="text-align: justify">
+Puedes configurar el proveedor de AWS sin exponer tus credenciales directamente en el archivo de configuración usando variables de entorno.
+Las variables de entorno que Terraform usa para AWS son:
+</div>
+
+```bash
+export AWS_ACCESS_KEY_ID="AKIA...YOURACCESSKEY"
+export AWS_SECRET_ACCESS_KEY="SECRETKEY...YOURSECRETKEY"
+export AWS_DEFAULT_REGION="us-west-2"
+```
+```HCL
+provider "aws" {
+  region  = "eu-west-3"
+}
+```
+[comment]: # (!!! data-background-image="media/background/1.png" data-background-size="contain" data-auto-animate)
+### AWS CLI credentials
+<div style="text-align: justify">
+Si tienes configurada la AWS CLI, Terraform puede usar el archivo de credenciales generado por la CLI
+</div>
+
+```bash [1|3-6]
+aws configure
+
+>>> AWS Access Key ID [****************6PPY]: 
+>>> AWS Secret Access Key [****************HDZ5]: 
+>>> Default region name [eu-west-3]: 
+>>> Default output format [json]: 
+```
+```HCL
+provider "aws" {
+  region  = "eu-west-3"
+}
+```
+[comment]: # (!!! data-background-image="media/background/1.png" data-background-size="contain")
+
 ### Terraform Providers
 
 [comment]: # (!!! data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate)
