@@ -5,11 +5,11 @@ data "aws_iam_policy_document" "allow_ec2_free_tier_creation" {
     actions   = [
       "ec2:RunInstances",
       "ec2:StopInstances",
-    "ec2:TerminateInstances",
-    "ec2:StartInstances"]
+      "ec2:TerminateInstances",
+      "ec2:StartInstances"]
     resources = ["*"]
     condition {
-      test     = "StringEquals"
+      test   = "StringEquals"
       values = ["t2.micro",
               "t3.micro"]
       variable = "ec2:InstanceType"
@@ -17,12 +17,27 @@ data "aws_iam_policy_document" "allow_ec2_free_tier_creation" {
   }
 
   statement {
+    sid       = "AllowLaunchKeyPair"
+    effect    = "Allow"
+    actions   = [
+      "ec2:RunInstances"]
+    resources = [
+      "arn:aws:ec2:eu-west-3:879381281365:key-pair/*",
+      "arn:aws:ec2:eu-west-3:879381281365:network-interface/*",
+      "arn:aws:ec2:eu-west-3:879381281365:security-group/*",
+      "arn:aws:ec2:eu-west-3:879381281365:subnet/*",
+      "arn:aws:ec2:eu-west-3:879381281365:volume/*",
+      "arn:aws:ec2:eu-west-3::image/*"]
+  }
+
+  statement {
     sid       = "AllowDescribeInstances"
     effect    = "Allow"
     actions   = [
-      "ec2:DescribeInstances",
-      "ec2:DescribeImages",
-      "ec2:DescribeInstanceTypes"]
+      "ec2:Describe*",
+      "ec2:*SecurityGroup*",
+      "ec2:*Tags"
+    ]
     resources = ["*"]
   }
 }
