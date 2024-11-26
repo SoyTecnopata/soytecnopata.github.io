@@ -1,3 +1,4 @@
 # Infrastructure - Terraform
 /**/.terraform/
 /**/terraform.tfstate*
+/Terraform-practical/terraform/create_resource_solution/
