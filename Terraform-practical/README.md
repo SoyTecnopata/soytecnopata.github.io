@@ -6,7 +6,7 @@
 [comment]: # (respondToHashChanges: false)
 [comment]: # (Other settings are documented at https://revealjs.com/config/)
 
-Alma Gonzalez | Inno It | 19 Noviembre 2024
+Alma Gonzalez | Inno It | 26 Noviembre 2024
 
 # `Terraform Practical`
 
