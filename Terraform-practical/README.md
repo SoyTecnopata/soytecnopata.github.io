@@ -193,8 +193,6 @@ https://registry.terraform.io/modules/terraform-aws-modules/s3-bucket/aws/latest
 ### Gracias
 [comment]: # (!!! data-background-image="media/background/titulo_m.png" data-background-size="contain" data-auto-animate)
 
-Alma Gonzalez | Inno It | 26 Noviembre 2024
-
 # `Terraform practical`
 
 [comment]: # (!!! data-background-image="media/background/4.png" data-background-size="contain")
